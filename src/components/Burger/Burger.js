@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Burger.module.css";
 import BurgerIngredient from "./BurgerIngredients/BurgerIngredients";
-import { transform } from "@babel/core";
+import Aux from "../../hoc/Aux";
 
 const Burger = props => {
   let transformedIngredients = Object.keys(props.ingredients)
@@ -18,11 +18,13 @@ const Burger = props => {
   }
   console.log(transformedIngredients);
   return (
-    <div className={classes.Burger}>
-      <BurgerIngredient type={"bread-top"} />
-      {transformedIngredients}
-      <BurgerIngredient type={"bread-bottom"} />
-    </div>
+    <Aux>
+      <div className={classes.Burger}>
+        <BurgerIngredient type={"bread-top"} />
+        {transformedIngredients}
+        <BurgerIngredient type={"bread-bottom"} />
+      </div>
+    </Aux>
   );
 };
 
