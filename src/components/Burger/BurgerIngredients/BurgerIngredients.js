@@ -11,7 +11,6 @@ const BurgerIngredient = props => {
       ingredient = <div className={classes.BreadBottom}></div>;
       break;
     case "bread-top":
-      console.log(classes, "bread top");
       ingredient = (
         <div className={classes.BreadTop}>
           <div className={classes.Seeds1}></div>
