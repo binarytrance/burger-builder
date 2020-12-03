@@ -1,12 +1,24 @@
-import { React } from "react";
+import React from "react";
+// import Button
+import { Link } from "react-router-dom";
+import Burger from "../../components/Burger/Burger";
 
-const CheckoutSummary = () => {
+const CheckoutSummary = ({ ingredients }) => {
     return (
-        <div>
+        <div className='checkout-summary'>
             <h1 className='px-3'>Your cart includes:</h1>
-            <ul>
-                <li>Sandwich: 1</li>
-            </ul>
+            <div className='h-screen'>
+                <Burger ingredients={ingredients} />
+            </div>
+            <div className=''>
+                <button className='' onClick={console.log("")}>
+                    Go Back
+                </button>
+                {/* <Link to={} */}
+                <button className='' onClick={console.log("")}>
+                    Proceed
+                </button>
+            </div>
         </div>
     );
 };

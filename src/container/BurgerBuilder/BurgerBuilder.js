@@ -92,17 +92,17 @@ class BurgerBuilder extends Component {
                 email: "ganeshan.dash@gmail.com"
             }
         };
-        console.log("axios", axiosInstance);
+        // console.log("axios", axiosInstance);
 
         axiosInstance
             .post("/orders.json", customerOrder)
             .then(response => {
                 this.setState({ loading: false, showModal: false });
-                console.log("response", response);
+                // console.log("response", response);
             })
             .catch(error => {
                 this.setState({ loading: false, showModal: false });
-                console.log("error", error);
+                // console.log("error", error);
             });
     };
     render() {
@@ -114,7 +114,7 @@ class BurgerBuilder extends Component {
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0 ? true : false;
         }
-        console.log("disabled info", this.state.showModal);
+        // console.log("disabled info", this.state.showModal);
         let burger = this.state.errorState ? <p>Ingredients cannot be shown</p> : <Spinner />;
         if (this.state.ingredients) {
             burger = (
