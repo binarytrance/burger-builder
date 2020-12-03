@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import CheckoutSummary from "./CheckoutSummary";
 import CheckoutStyles from "../../styles/CheckoutStyles";
 // import { useParams } from "react-router-dom";
@@ -9,19 +9,16 @@ import CheckoutStyles from "../../styles/CheckoutStyles";
 // 4.continue -> contact form
 // 5.build burger
 const Checkout = props => {
-    const [ingredientss, setIngredientss] = useState({
-        salad: 1,
-        meat: 1
-    });
-
     // const urlParams = useParams();
-    console.log(props);
+    // console.log(props.location.ingredients);
 
     return (
         <CheckoutStyles>
             <div className='bg-gray-100'>
                 <h1 className='px-3 '>Checkoutttt</h1>
-                <CheckoutSummary ingredients={ingredientss} />
+                <CheckoutSummary
+                    ingredients={props.location.ingredients ? props.location.ingredients : {}}
+                />
             </div>
         </CheckoutStyles>
     );

@@ -21,7 +21,7 @@ const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseH
             <ul>{orderedIngredients}</ul>
             <p>Total Price: {price}</p>
             <button onClick={closeModalHandler}>Cancel</button>
-            <Link to={"/checkout"}>
+            <Link to={{ pathname: `/checkout`, ingredients: ingredients }}>
                 <button onClick={continuePurchaseHandler}>Checkout</button>
             </Link>
         </Aux>

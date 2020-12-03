@@ -1,13 +1,12 @@
 import React from "react";
 // import Button
-import { Link } from "react-router-dom";
 import Burger from "../../components/Burger/Burger";
 
 const CheckoutSummary = ({ ingredients }) => {
     return (
         <div className='checkout-summary'>
             <h1 className='px-3'>Your cart includes:</h1>
-            <div className='h-screen'>
+            <div className='h-1/2'>
                 <Burger ingredients={ingredients} />
             </div>
             <div className=''>

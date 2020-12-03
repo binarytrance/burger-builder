@@ -1,6 +1,6 @@
 import React from "react";
 import Aux from "../../hoc/Aux";
-import { Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 // import Checkout from "../../container/Checkout/Checkout";
 import classes from "./Layout.css";
 
