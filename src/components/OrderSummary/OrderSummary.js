@@ -1,9 +1,9 @@
 import React from "react";
 import Aux from "../../hoc/Aux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseHandler }) => {
-    // console.log(ingredients, price);
+    console.log(ingredients, price);
     // console.table(ingredients);
     const orderedIngredients = Object.keys(ingredients).reduce((result, ingredient, index) => {
         console.log({ result, ingredient, index });
@@ -21,9 +21,9 @@ const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseH
             <ul>{orderedIngredients}</ul>
             <p>Total Price: {price}</p>
             <button onClick={closeModalHandler}>Cancel</button>
-            <Link to={{ pathname: `/checkout`, ingredients: ingredients }}>
-                <button onClick={continuePurchaseHandler}>Checkout</button>
-            </Link>
+            {/* <Link to={{ pathname: `/checkout`, ingredients: ingredients }}> */}
+            <button onClick={continuePurchaseHandler}>Checkout</button>
+            {/* </Link> */}
         </Aux>
     );
 };

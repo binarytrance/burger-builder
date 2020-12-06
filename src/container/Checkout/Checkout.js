@@ -9,15 +9,21 @@ import CheckoutStyles from "../../styles/CheckoutStyles";
 // 4.continue -> contact form
 // 5.build burger
 const Checkout = props => {
+    console.log(props);
+
     // const urlParams = useParams();
     // console.log(props.location.ingredients);
-
+    const cancelCheckout = () => {
+        console.log(props);
+        props.history.goBack();
+    };
     return (
         <CheckoutStyles>
             <div className='bg-gray-100'>
                 <h1 className='px-3 '>Checkoutttt</h1>
                 <CheckoutSummary
                     ingredients={props.location.ingredients ? props.location.ingredients : {}}
+                    cancelCheckout={cancelCheckout}
                 />
             </div>
         </CheckoutStyles>

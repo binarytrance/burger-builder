@@ -79,31 +79,38 @@ class BurgerBuilder extends Component {
         this.setState({ showModal: false });
     };
     continuePurchaseHandler = () => {
-        this.setState({ loading: true });
-        const customerOrder = {
-            ingredients: this.state.ingredients,
-            totalPrice: this.state.totalPrice,
-            customerDetails: {
-                address: {
-                    street: "asdf",
-                    state: "KA",
-                    pinCode: "214453"
-                },
-                email: "ganeshan.dash@gmail.com"
-            }
-        };
-        // console.log("axios", axiosInstance);
+        // this.setState({ loading: true });
+        // const customerOrder = {
+        //     ingredients: this.state.ingredients,
+        //     totalPrice: this.state.totalPrice,
+        //     customerDetails: {
+        //         address: {
+        //             street: "asdf",
+        //             state: "KA",
+        //             pinCode: "214453"
+        //         },
+        //         email: "ganeshan.dash@gmail.com"
+        //     }
+        // };
+        // // console.log("axios", axiosInstance);
 
-        axiosInstance
-            .post("/orders.json", customerOrder)
-            .then(response => {
-                this.setState({ loading: false, showModal: false });
-                // console.log("response", response);
-            })
-            .catch(error => {
-                this.setState({ loading: false, showModal: false });
-                // console.log("error", error);
-            });
+        // axiosInstance
+        //     .post("/orders.json", customerOrder)
+        //     .then(response => {
+        //         this.setState({ loading: false, showModal: false });
+        //         // console.log("response", response);
+        //     })
+        //     .catch(error => {
+        //         this.setState({ loading: false, showModal: false });
+        //         // console.log("error", error);
+        //     });
+        const ingredients = this.state.ingredients;
+        console.log(ingredients);
+
+        this.props.history.push({
+            pathname: "/checkout",
+            ingredients: ingredients
+        });
     };
     render() {
         let orderSummary = null;
