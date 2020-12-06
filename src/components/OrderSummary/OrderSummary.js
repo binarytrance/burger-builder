@@ -3,8 +3,8 @@ import Aux from "../../hoc/Aux";
 import { Link } from "react-router-dom";
 
 const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseHandler }) => {
-    console.log(ingredients, price);
-    console.table(ingredients);
+    // console.log(ingredients, price);
+    // console.table(ingredients);
     const orderedIngredients = Object.keys(ingredients).reduce((result, ingredient, index) => {
         console.log({ result, ingredient, index });
         if (ingredients[ingredient] > 0)
