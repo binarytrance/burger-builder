@@ -2,7 +2,7 @@ import React from "react";
 // import Button
 import Burger from "../../components/Burger/Burger";
 
-const CheckoutSummary = ({ ingredients, cancelCheckout }) => {
+const CheckoutSummary = ({ ingredients, cancelCheckoutHandler, placeOrderHandler }) => {
     return (
         <div className='checkout-summary'>
             <h1 className='px-3'>Your cart includes:</h1>
@@ -10,11 +10,10 @@ const CheckoutSummary = ({ ingredients, cancelCheckout }) => {
                 <Burger ingredients={ingredients} />
             </div>
             <div className=''>
-                <button className='' onClick={cancelCheckout}>
+                <button className='' onClick={cancelCheckoutHandler}>
                     Go Back
                 </button>
-                {/* <Link to={} */}
-                <button className='' onClick={console.log("")}>
+                <button className='' onClick={placeOrderHandler}>
                     Proceed
                 </button>
             </div>
