@@ -8,7 +8,10 @@ export const Layout = props => (
     <Aux>
         <nav>
             <div>Toolbar, Sidebar, Backdrop, Footer</div>
-            <NavLink to='/checkout'>Checkout</NavLink>
+            <NavLink to='/' exact>
+                Burger Builder
+            </NavLink>
+            <NavLink to='/orders'>Orders</NavLink>
         </nav>
         <main className={classes.Content}>
             <>{props.children}</>

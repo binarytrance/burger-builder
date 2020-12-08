@@ -27,11 +27,13 @@ const Checkout = props => {
 
         const query = new URLSearchParams(props.location.search); // returns an object with arrays ['ingredient', quantity]
         const ingredientsObj = {};
-        // console.log("query", query);
+        console.log("query", query.entries());
 
         for (let param of query.entries()) {
             console.log(param);
             if (param[0] === "totalPrice") {
+                console.log(param[1]);
+
                 setTotalPrice(param[1]);
             } else {
                 // we are constructing the ingredientsObj with the ingredients and their respective values

@@ -16,11 +16,11 @@ class ContactData extends Component {
     };
     createOrderHandler = e => {
         e.preventDefault();
-        console.log("submit form", this.props.ingredients);
+        console.log("submit form", this.props.ingredients, this.props.totalPrice);
         this.setState({ loading: true });
         const customerOrder = {
             ingredients: this.props.ingredients,
-            totalPrice: this.props.totalPrice,
+            totalPrice: this.props.price,
             customerDetails: {
                 address: {
                     street: "checkout street",
