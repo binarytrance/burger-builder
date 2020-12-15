@@ -16,15 +16,25 @@ const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseH
         return result;
     }, []);
     return (
-        <Aux>
-            <h3>You have ordered the following items:</h3>
+        <div className='p-4'>
+            <h3 className='text-bold'>You have ordered the following items:</h3>
             <ul>{orderedIngredients}</ul>
             <p>Total Price: {price}</p>
-            <button onClick={closeModalHandler}>Cancel</button>
+            <button
+                className='bg-red-500 px-4 py-2 rounded text-white mr-3'
+                onClick={closeModalHandler}
+            >
+                Cancel
+            </button>
             {/* <Link to={{ pathname: `/checkout`, ingredients: ingredients }}> */}
-            <button onClick={continuePurchaseHandler}>Checkout</button>
+            <button
+                className='bg-green-500 px-4 py-2 rounded text-white'
+                onClick={continuePurchaseHandler}
+            >
+                Checkout
+            </button>
             {/* </Link> */}
-        </Aux>
+        </div>
     );
 };
 

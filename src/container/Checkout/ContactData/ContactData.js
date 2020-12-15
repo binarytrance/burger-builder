@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axiosInstance from "../../../axios-orders";
 import Spinner from "../../../UI/Spinner/Spinner";
+import Input from "../../../UI/Input/Input";
 
 class ContactData extends Component {
     state = {
@@ -48,15 +49,35 @@ class ContactData extends Component {
     render() {
         return (
             <div>
-                <h4>Enter your contact data</h4>
+                <h4 className='text-mammoth'>Enter your contact data</h4>
                 {this.state.loading ? (
                     <Spinner />
                 ) : (
                     <form>
-                        <input type='text' name='name' placeholder='Enter your name' />
-                        <input type='text' name='email' placeholder='Enter your email' />
-                        <input type='text' name='street' placeholder='Street' />
-                        <input type='text' name='postal' placeholder='Polstal code' />
+                        <Input
+                            label='Enter your name'
+                            inputType='text'
+                            name='name'
+                            placeholder='Enter your name'
+                        />
+                        <Input
+                            label='Enter your email'
+                            inputType='text'
+                            name='email'
+                            placeholder='Enter your email'
+                        />
+                        <Input
+                            label='Enter your address'
+                            inputType='text'
+                            name='street'
+                            placeholder='Street'
+                        />
+                        <Input
+                            label='Enter your pin code'
+                            inputType='text'
+                            name='postal'
+                            placeholder='Polstal code'
+                        />
                         <button type='submit' onClick={this.createOrderHandler}>
                             ORDER
                         </button>

@@ -4,7 +4,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-    purge: [],
+    purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
     presets: [],
     darkMode: false, // or 'media' or 'class'
     theme: {
@@ -194,6 +194,7 @@ module.exports = {
             ]
         },
         fontSize: {
+            mammoth: "90rem",
             xs: ["0.75rem", { lineHeight: "1rem" }],
             sm: ["0.875rem", { lineHeight: "1.25rem" }],
             base: ["1rem", { lineHeight: "1.5rem" }],
