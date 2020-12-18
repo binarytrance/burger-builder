@@ -96,6 +96,22 @@ class ContactData extends Component {
             });
     };
 
+    formInputHandler = (event, inputIdentifier) => {
+        console.log(event.target.value);
+        // this doesn't deep clone the object, just the first level
+        const clonedOrderForm = {...this.state.orderForm};
+        const deepClonedToFirstLevel = {...clonedOrderForm[inputIdentifier]};
+        console.log(clonedOrderForm);
+        deepClonedToFirstLevel.value = event.target.value;
+        clonedOrderForm[inputIdentifier] = deepClonedToFirstLevel;
+        this.setState({orderForm: clonedOrderForm})
+        setTimeout(() => {
+            console.log(deepClonedToFirstLevel, this.state.orderForm.country);
+
+        }, 220);
+
+    }
+
     render() {
         const formElementsArray = [];
         for(let key in this.state.orderForm) {
@@ -110,7 +126,7 @@ class ContactData extends Component {
                     <form>
                         {
                             formElementsArray.map(element => {
-                                return <Input key={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label}/>
+                                return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} formInputHandler={this.formInputHandler}/>
                             })
                         }
                         <button type='submit' onClick={this.createOrderHandler}>
