@@ -5,12 +5,69 @@ import Input from "../../../UI/Input/Input";
 
 class ContactData extends Component {
     state = {
-        address: {
-            name: "",
-            email: "",
-            address: {
-                street: "",
-                postalCode: ""
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Name'
+                },
+                value: '',
+                label: 'Name'
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Address'
+                },
+                value: '',
+                label: 'Address'
+            },
+            state: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'State'
+                },
+                value: '',
+                label: 'State'
+            },
+            country: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'Country'
+                    },
+                    value: '',
+                    label: 'Country'
+
+            },
+            pinCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Pin Code'
+                },
+                value: '',
+                label: 'Pin Code'
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'E Mail'
+                },
+                value: '',
+                label: 'Email'
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [{value: 'fastest', label: 'Fastest'}, {value: 'cheapest', label: 'Cheapest'}]
+                },
+                value: '',
+                label: 'Delivery method'
             }
         },
         loading: false
@@ -21,15 +78,8 @@ class ContactData extends Component {
         this.setState({ loading: true });
         const customerOrder = {
             ingredients: this.props.ingredients,
-            totalPrice: this.props.price,
-            customerDetails: {
-                address: {
-                    street: "checkout street",
-                    state: "KA",
-                    pinCode: "214453"
-                },
-                email: "ganeshan.dash@gmail.com"
-            }
+            totalPrice: this.props.price
+
         };
         // console.log("axios", axiosInstance);
 
@@ -47,6 +97,10 @@ class ContactData extends Component {
     };
 
     render() {
+        const formElementsArray = [];
+        for(let key in this.state.orderForm) {
+            formElementsArray.push({id: key, config: this.state.orderForm[key]});
+        }
         return (
             <div>
                 <h4 className='text-mammoth'>Enter your contact data</h4>
@@ -54,30 +108,11 @@ class ContactData extends Component {
                     <Spinner />
                 ) : (
                     <form>
-                        <Input
-                            label='Enter your name'
-                            inputType='text'
-                            name='name'
-                            placeholder='Enter your name'
-                        />
-                        <Input
-                            label='Enter your email'
-                            inputType='text'
-                            name='email'
-                            placeholder='Enter your email'
-                        />
-                        <Input
-                            label='Enter your address'
-                            inputType='text'
-                            name='street'
-                            placeholder='Street'
-                        />
-                        <Input
-                            label='Enter your pin code'
-                            inputType='text'
-                            name='postal'
-                            placeholder='Polstal code'
-                        />
+                        {
+                            formElementsArray.map(element => {
+                                return <Input key={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label}/>
+                            })
+                        }
                         <button type='submit' onClick={this.createOrderHandler}>
                             ORDER
                         </button>

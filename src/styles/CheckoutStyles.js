@@ -6,7 +6,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 const CheckoutStyles = styled.div.attrs({
-    className: "flex flex-col h-screen justify-center items-center bg-gray-100"
+    className: "flex flex-col justify-center items-center bg-gray-100"
 })`
     & {
         h1 {

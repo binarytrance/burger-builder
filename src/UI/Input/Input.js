@@ -3,15 +3,18 @@ import React from "react";
 const Input = props => {
     let inputElement = null;
 
-    switch (props.inputType) {
+    switch (props.elementType) {
         case "input":
-            inputElement = <input {...props} />;
+            inputElement = <input type={props.elementType} {...props.elementConfig} defaultValue={props.value}/>;
             break;
         case "textarea":
-            inputElement = <textarea {...props} />;
+            inputElement = <textarea type={props.elementType} {...props.elementConfig} defaultValue={props.value} />;
+            break;
+        case 'select':
+            inputElement = <select type={props.elementType} defaultValue={props.value}>{props.elementConfig.options.map(option => <option key={option.value} defaultValue={option.value}>{option.label}</option>)}</select>;
             break;
         default:
-            inputElement = <input {...props} />;
+            inputElement = <input type={props.elementType} {...props.elementConfig} defaultValue={props.value} />;
             break;
     }
     return (
