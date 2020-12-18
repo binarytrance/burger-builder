@@ -75,11 +75,15 @@ class ContactData extends Component {
     createOrderHandler = e => {
         e.preventDefault();
         console.log("submit form", this.props.ingredients, this.props.totalPrice);
+        const orderDetails = {};
+        for(let formElementIdentier in this.state.orderForm) {
+            orderDetails[formElementIdentier] = this.state.orderForm[formElementIdentier].value
+        }
         this.setState({ loading: true });
         const customerOrder = {
             ingredients: this.props.ingredients,
-            totalPrice: this.props.price
-
+            totalPrice: this.props.price,
+            orderDetails: orderDetails
         };
         // console.log("axios", axiosInstance);
 
@@ -104,12 +108,7 @@ class ContactData extends Component {
         console.log(clonedOrderForm);
         deepClonedToFirstLevel.value = event.target.value;
         clonedOrderForm[inputIdentifier] = deepClonedToFirstLevel;
-        this.setState({orderForm: clonedOrderForm})
-        setTimeout(() => {
-            console.log(deepClonedToFirstLevel, this.state.orderForm.country);
-
-        }, 220);
-
+        this.setState({orderForm: clonedOrderForm});
     }
 
     render() {
@@ -123,7 +122,7 @@ class ContactData extends Component {
                 {this.state.loading ? (
                     <Spinner />
                 ) : (
-                    <form>
+                    <form onSubmit={this.createOrderHandler}>
                         {
                             formElementsArray.map(element => {
                                 return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} formInputHandler={this.formInputHandler}/>
