@@ -13,7 +13,12 @@ class ContactData extends Component {
                     placeholder: 'Name'
                 },
                 value: '',
-                label: 'Name'
+                label: 'Name',
+                validity: {
+                    required: true,
+                },
+                valid: false,
+                touched: false
             },
             street: {
                 elementType: 'input',
@@ -22,7 +27,13 @@ class ContactData extends Component {
                     placeholder: 'Address'
                 },
                 value: '',
-                label: 'Address'
+                label: 'Address',
+                validity: {
+                    required: true,
+
+                },
+                valid: false,
+                touched: false
             },
             state: {
                 elementType: 'input',
@@ -31,7 +42,13 @@ class ContactData extends Component {
                     placeholder: 'State'
                 },
                 value: '',
-                label: 'State'
+                label: 'State',
+                validity: {
+                    required: true,
+
+                },
+                valid: false,
+                touched: false
             },
             country: {
                     elementType: 'input',
@@ -40,7 +57,13 @@ class ContactData extends Component {
                         placeholder: 'Country'
                     },
                     value: '',
-                    label: 'Country'
+                    label: 'Country',
+                    validity: {
+                        required: true,
+
+                    },
+                    valid: false,
+                    touched: false
 
             },
             pinCode: {
@@ -50,7 +73,14 @@ class ContactData extends Component {
                     placeholder: 'Pin Code'
                 },
                 value: '',
-                label: 'Pin Code'
+                label: 'Pin Code',
+                validity: {
+                    required: true,
+                    minLength: 6,
+                    maxLength: 6
+                },
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -59,7 +89,13 @@ class ContactData extends Component {
                     placeholder: 'E Mail'
                 },
                 value: '',
-                label: 'Email'
+                label: 'Email',
+                validity: {
+                    required: true,
+
+                },
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -67,14 +103,19 @@ class ContactData extends Component {
                     options: [{value: 'fastest', label: 'Fastest'}, {value: 'cheapest', label: 'Cheapest'}]
                 },
                 value: '',
-                label: 'Delivery method'
+                label: 'Delivery method',
+                validity: {
+                    required: false,
+                },
+                valid: true
             }
         },
+        isFormValid: false,
         loading: false
     };
     createOrderHandler = e => {
         e.preventDefault();
-        console.log("submit form", this.props.ingredients, this.props.totalPrice);
+        // console.log("submit form", this.props.ingredients, this.props.totalPrice);
         const orderDetails = {};
         for(let formElementIdentier in this.state.orderForm) {
             orderDetails[formElementIdentier] = this.state.orderForm[formElementIdentier].value
@@ -100,15 +141,42 @@ class ContactData extends Component {
             });
     };
 
+    checkValidity = (value, rules) => {
+        let isValid = true;
+
+        if(rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
+        if(rules.minLength) {
+            isValid = value.trim().length >= rules.minLength && isValid;
+        }
+        if(rules.maxLength) {
+            isValid = value.trim().length <= rules.maxLength && isValid;
+        }
+        return isValid;
+    }
+
     formInputHandler = (event, inputIdentifier) => {
-        console.log(event.target.value);
+        // console.log(event.target.value);
         // this doesn't deep clone the object, just the first level
         const clonedOrderForm = {...this.state.orderForm};
+        // clones object one level deeper
         const deepClonedToFirstLevel = {...clonedOrderForm[inputIdentifier]};
-        console.log(clonedOrderForm);
+        // console.log(clonedOrderForm);
         deepClonedToFirstLevel.value = event.target.value;
+        deepClonedToFirstLevel.valid = this.checkValidity(event.target.value, deepClonedToFirstLevel.validity);
+        deepClonedToFirstLevel.touched = true;
         clonedOrderForm[inputIdentifier] = deepClonedToFirstLevel;
+        let isFormValid = true;
+        for(let key in deepClonedToFirstLevel) {
+            isFormValid = deepClonedToFirstLevel[key].valid && isFormValid;
+        }
         this.setState({orderForm: clonedOrderForm});
+        setTimeout(() => {
+            console.log(this.state.orderForm, deepClonedToFirstLevel);
+        }, 0);
+
+
     }
 
     render() {
@@ -125,10 +193,10 @@ class ContactData extends Component {
                     <form onSubmit={this.createOrderHandler}>
                         {
                             formElementsArray.map(element => {
-                                return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} formInputHandler={this.formInputHandler}/>
+                                return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
                             })
                         }
-                        <button type='submit' onClick={this.createOrderHandler}>
+                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler}>
                             ORDER
                         </button>
                     </form>

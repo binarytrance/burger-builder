@@ -15,6 +15,10 @@ const CheckoutStyles = styled.div.attrs({
 
         button {
             ${tw`bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-blue-700 rounded`}
+            &:disabled {
+                background: #666;
+                cursor: not-allowed;
+            }
         }
     }
 `;
