@@ -1,3 +1,4 @@
+import { INGREDIENT_PRICES } from '../constants';
 import * as actionTypes from './actions';
 
 const initialState = {
@@ -18,8 +19,9 @@ const reducer = (state = initialState, action) => {
                     ...state.ingredients,
                     // overriding a property of the object the ES6 way
                     [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
-                    //  this.state.totalPrice + INGREDIENT_PRICES[ingredient];
-                }
+
+                },
+                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
             };
             case actionTypes.REMOVE_INGREDIENT:
                 return {
@@ -27,8 +29,10 @@ const reducer = (state = initialState, action) => {
                     ingredients: {
                         ...state.ingredients,
                         // overriding a property of the object the ES6 way
-                        [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-                    }
+                        [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
+
+                    },
+                    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
                 };
 
         default:
