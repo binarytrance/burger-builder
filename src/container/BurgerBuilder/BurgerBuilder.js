@@ -10,31 +10,12 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
 import * as actionTypes from '../../store/actions';
 
-const INGREDIENT_PRICES = {
-    salad: 0.8,
-    meat: 1,
-    bacon: 0.7,
-    cheese: 0.6
-};
 class BurgerBuilder extends Component {
     state = {
-        // ingredients: null,
-        totalPrice: 0,
-        purchasable: false,
         showModal: false,
         loading: false,
         errorState: false
     };
-    // componentDidMount() {
-    //     axiosInstance
-    //         .get("https://my-burger-builder-42007.firebaseio.com/ingredients.json")
-    //         .then(res => {
-    //             this.setState({ ingredients: res.data });
-    //         })
-    //         .catch(err => {
-    //             this.setState({ errorState: true });
-    //         });
-    // }
 
     updatePurchaseState = ingredients => {
         const sum = Object.keys(ingredients)
@@ -46,34 +27,7 @@ class BurgerBuilder extends Component {
             }, 0);
         return sum > 0;
     };
-    addIngredientHandler = ingredient => {
-        const updatedIngredients = { ...this.state.ingredients };
-        const updatedIngredientCount = this.state.ingredients[ingredient] + 1;
-        updatedIngredients[ingredient] = updatedIngredientCount;
-        const updatedPrice = this.state.totalPrice + INGREDIENT_PRICES[ingredient];
-        this.setState({
-            ...this.state.ingredients,
-            ingredients: updatedIngredients,
-            totalPrice: updatedPrice
-        });
-        this.updatePurchaseState(updatedIngredients);
-    };
-    removeIngredientHandler = ingredient => {
-        // console.log("this.state.ingredients[ingredient]", this.state.ingredients[ingredient]);
 
-        if (this.state.ingredients[ingredient] > 0) {
-            const updatedIngredients = { ...this.state.ingredients };
-            const updatedIngredientCount = this.state.ingredients[ingredient] - 1;
-            updatedIngredients[ingredient] = updatedIngredientCount;
-            const updatedPrice = this.state.totalPrice - INGREDIENT_PRICES[ingredient];
-            this.setState({
-                ...this.state.ingredients,
-                ingredients: updatedIngredients,
-                totalPrice: updatedPrice
-            });
-            this.updatePurchaseState(updatedIngredients);
-        }
-    };
     openModalHandler = () => {
         this.setState({ showModal: true });
     };
