@@ -1,5 +1,5 @@
 import React from "react";
-import Aux from "../../hoc/Aux";
+// import Aux from "../../hoc/Aux";
 // import { Link } from "react-router-dom";
 
 const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseHandler }) => {
