@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axiosInstance from "../../../axios-orders";
 import Spinner from "../../../UI/Spinner/Spinner";
 import Input from "../../../UI/Input/Input";
+import {connect} from 'react-redux'
 
 class ContactData extends Component {
     state = {
@@ -168,13 +169,14 @@ class ContactData extends Component {
         deepClonedToFirstLevel.touched = true;
         clonedOrderForm[inputIdentifier] = deepClonedToFirstLevel;
         let isFormValid = true;
-        for(let key in deepClonedToFirstLevel) {
-            isFormValid = deepClonedToFirstLevel[key].valid && isFormValid;
+        for(let key in clonedOrderForm) {
+            // console.log(deepClonedToFirstLevel[key], isFormValid, 'voila', deepClonedToFirstLevel, key)
+            isFormValid = clonedOrderForm[key].valid && isFormValid;
         }
-        this.setState({orderForm: clonedOrderForm});
-        setTimeout(() => {
-            console.log(this.state.orderForm, deepClonedToFirstLevel);
-        }, 0);
+        this.setState({orderForm: clonedOrderForm, isFormValid: isFormValid});
+        // setTimeout(() => {
+        //     console.log(this.state.isFormValid, this.state.orderForm, deepClonedToFirstLevel, isFormValid);
+        // }, 0);
 
 
     }
@@ -206,4 +208,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ingredients: state.ingredients,
+        price: state.totalPrice,
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);

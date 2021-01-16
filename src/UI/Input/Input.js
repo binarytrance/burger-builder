@@ -2,7 +2,7 @@ import React from "react";
 
 const Input = props => {
     let inputElement = null;
-    console.log('touched', props.touched);
+    // console.log('touched', props.touched);
 
     switch (props.elementType) {
         case "input":
