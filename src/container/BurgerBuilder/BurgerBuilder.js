@@ -13,22 +13,20 @@ import * as burgerBuilderActions from '../../store/actions';
 class BurgerBuilder extends Component {
     state = {
         showModal: false,
-        loading: false,
-        errorState: false
     };
 
     componentDidMount () {
         console.log(this.props);
         // here we are fetching ingredients inside the component and dispatching an action
-        axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
-        .then(response => {
-            console.log(response.data);
-            this.props.fetchIngredients(response.data);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-
+        // axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
+        // .then(response => {
+        //     console.log(response.data);
+        //     this.props.fetchIngredients(response.data);
+        // })
+        // .catch(error => {
+        //     console.log(error);
+        // })
+        this.props.fetchIngredients();
     }
 
     updatePurchaseState = ingredients => {
@@ -53,6 +51,7 @@ class BurgerBuilder extends Component {
         this.props.history.push('/checkout');
     };
     render() {
+        console.log(this.props.ingredients)
         let orderSummary = null;
 
         const disabledInfo = {
@@ -62,7 +61,8 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0 ? true : false;
         }
         // console.log("disabled info", this.state.showModal);
-        let burger = this.state.errorState ? <p>Ingredients cannot be shown</p> : <Spinner />;
+        let burger = this.props.error ? <p>Ingredients cannot be shown</p> : <Spinner />;
+
         if (this.props.ingredients) {
             burger = (
                 <>
@@ -87,9 +87,6 @@ class BurgerBuilder extends Component {
                 />
             );
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner />;
-        }
         return (
             <Aux>
                 <Modal show={this.state.showModal} closeModalHandler={this.closeModalHandler}>
@@ -103,13 +100,14 @@ class BurgerBuilder extends Component {
 const mapStateToProps =  state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        error: state.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchIngredients: (allIngredients) => dispatch(burgerBuilderActions.fetchIngredients(allIngredients)),
+        fetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients()),
         addIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.addIngredient(ingredientName)),
         removeIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
     }
