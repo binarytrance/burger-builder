@@ -17,6 +17,20 @@ class BurgerBuilder extends Component {
         errorState: false
     };
 
+    componentDidMount () {
+        console.log(this.props);
+        // here we are fetching ingredients inside the component and dispatching an action
+        axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
+        .then(response => {
+            console.log(response.data);
+            this.props.fetchIngredients(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+
+    }
+
     updatePurchaseState = ingredients => {
         const sum = Object.keys(ingredients)
             .map(igKey => {
@@ -95,6 +109,7 @@ const mapStateToProps =  state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        fetchIngredients: (allIngredients) => dispatch(burgerBuilderActions.fetchIngredients(allIngredients)),
         addIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.addIngredient(ingredientName)),
         removeIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
     }

@@ -3,15 +3,17 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     ingredients: {
-        salad: 0,
-        bacon: 0,
-        meat: 0,
-        cheese: 0,
+
     },
     totalPrice: 0
 }
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.FETCH_INGREDIENTS:
+            return {
+                ...state,
+                ingredients: action.allIngredients
+            }
         case actionTypes.ADD_INGREDIENT:
             return {
                 ...state,
