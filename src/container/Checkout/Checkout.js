@@ -1,7 +1,7 @@
 import React from "react";
 import CheckoutSummary from "./CheckoutSummary";
 import CheckoutStyles from "../../styles/CheckoutStyles";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import ContactData from "./ContactData/ContactData";
 import { connect } from "react-redux";
 
@@ -23,6 +23,28 @@ const Checkout = props => {
     const placeOrderHandler = () => {
         props.history.replace("/checkout/contact-data");
     };
+    let summary = <Redirect to='/' />
+    if(props.ingredients) {
+        summary = (
+            <>
+                <div className='bg-gray-100'>
+                    <h1 className='px-3 '>Checkoutttt</h1>
+                    <CheckoutSummary
+                        ingredients={props.ingredients}
+                        cancelCheckoutHandler={cancelCheckoutHandler}
+                        placeOrderHandler={placeOrderHandler}
+                    />
+                </div>
+                <Route
+                    path={props.match.path + "/contact-data"}
+                    // render={props => (
+                    //     <ContactData ingredients={props.ingredients} price={props.totalPrice} {...props} />
+                    // )}
+                    component={ContactData}
+                />
+            </>
+        )
+    }
     // useEffect(() => {
     //     // console.log("search", props.location.search);
 
@@ -48,21 +70,7 @@ const Checkout = props => {
     // }, []);
     return (
         <CheckoutStyles>
-            <div className='bg-gray-100'>
-                <h1 className='px-3 '>Checkoutttt</h1>
-                <CheckoutSummary
-                    ingredients={props.ingredients}
-                    cancelCheckoutHandler={cancelCheckoutHandler}
-                    placeOrderHandler={placeOrderHandler}
-                />
-            </div>
-            <Route
-                path={props.match.path + "/contact-data"}
-                // render={props => (
-                //     <ContactData ingredients={props.ingredients} price={props.totalPrice} {...props} />
-                // )}
-                component={ContactData}
-            />
+            {summary}
         </CheckoutStyles>
     );
 };
