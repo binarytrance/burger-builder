@@ -16,8 +16,11 @@ const fetchIngredientsHandler = (allIngredients) => {
     }
  }
 // the action creator that gets actually dispatched
-export const fetchIngredients = () => {
+export const fetchIngredients = (asdf) => {
+
+
     return dispatch => {
+        console.log(dispatch, 'dispatch');
         axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
         .then(response => {
             console.log(response);

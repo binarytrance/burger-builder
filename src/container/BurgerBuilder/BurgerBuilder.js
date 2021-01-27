@@ -8,7 +8,7 @@ import axiosInstance from "../../axios-orders";
 import Spinner from "../../UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import { connect } from "react-redux";
-import * as burgerBuilderActions from '../../store/actions';
+import * as actions from '../../store/actions';
 
 class BurgerBuilder extends Component {
     state = {
@@ -16,7 +16,6 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount () {
-        console.log(this.props);
         // here we are fetching ingredients inside the component and dispatching an action
         // axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
         // .then(response => {
@@ -47,11 +46,12 @@ class BurgerBuilder extends Component {
         this.setState({ showModal: false });
     };
     continuePurchaseHandler = () => {
-        // console.log(queryString);
+        console.log('queryString');
+        this.props.orderPlaced();
         this.props.history.push('/checkout');
     };
     render() {
-        console.log(this.props.ingredients)
+        // console.log(this.props.ingredients)
         let orderSummary = null;
 
         const disabledInfo = {
@@ -99,17 +99,19 @@ class BurgerBuilder extends Component {
 }
 const mapStateToProps =  state => {
     return {
-        ingredients: state.ingredients,
-        totalPrice: state.totalPrice,
-        error: state.error
+        ingredients: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error,
+        orderPlaced: state.order.orderPlaced
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchIngredients: () => dispatch(burgerBuilderActions.fetchIngredients()),
-        addIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.addIngredient(ingredientName)),
-        removeIngredientHandler: (ingredientName) => dispatch(burgerBuilderActions.removeIngredient(ingredientName)),
+        fetchIngredients: () => dispatch(actions.fetchIngredients()),
+        addIngredientHandler: (ingredientName) => dispatch(actions.addIngredient(ingredientName)),
+        removeIngredientHandler: (ingredientName) => dispatch(actions.removeIngredient(ingredientName)),
+        orderPlaced: () => dispatch(actions.orderPlaced())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axiosInstance));

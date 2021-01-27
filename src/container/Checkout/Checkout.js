@@ -23,10 +23,12 @@ const Checkout = props => {
     const placeOrderHandler = () => {
         props.history.replace("/checkout/contact-data");
     };
-    let summary = <Redirect to='/' />
+    let summary = ''
+    const orderPlacedRedirect = props.orderPlaced ? <Redirect to='/' /> : null;
     if(props.ingredients) {
         summary = (
             <>
+                {orderPlacedRedirect}
                 <div className='bg-gray-100'>
                     <h1 className='px-3 '>Checkoutttt</h1>
                     <CheckoutSummary
@@ -44,6 +46,9 @@ const Checkout = props => {
                 />
             </>
         )
+    }
+    else {
+        summary = <Redirect to='/' />
     }
     // useEffect(() => {
     //     // console.log("search", props.location.search);
@@ -77,8 +82,10 @@ const Checkout = props => {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
+        ingredients: state.burgerBuilder.ingredients,
+        orderPlaced: state.order.orderPlaced
     }
 }
+
 
 export default connect(mapStateToProps)(Checkout);

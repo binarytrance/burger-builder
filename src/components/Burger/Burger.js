@@ -5,7 +5,7 @@ import Aux from "../../hoc/Aux";
 
 const Burger = props => {
     // console.clear();
-    console.log(props.ingredients);
+    // console.log(props.ingredients);
 
     let transformedIngredients = Object.keys(props.ingredients)
         .map(IgKey => {

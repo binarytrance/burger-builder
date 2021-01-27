@@ -3,10 +3,10 @@ import React from "react";
 // import { Link } from "react-router-dom";
 
 const OrderSummary = ({ ingredients, price, closeModalHandler, continuePurchaseHandler }) => {
-    console.log('summary',{ingredients, price});
+    // console.log('summary',{ingredients, price});
     // console.table(ingredients);
     const orderedIngredients = Object.keys(ingredients).reduce((result, ingredient, index) => {
-        console.log({ result, ingredient, index });
+        // console.log({ result, ingredient, index });
         if (ingredients[ingredient] > 0)
             result.push(
                 <li key={ingredient + index}>

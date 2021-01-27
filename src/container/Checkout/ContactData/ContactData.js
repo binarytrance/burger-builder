@@ -105,7 +105,7 @@ class ContactData extends Component {
                 elementConfig: {
                     options: [{value: 'fastest', label: 'Fastest'}, {value: 'cheapest', label: 'Cheapest'}]
                 },
-                value: '',
+                value: 'fastest',
                 label: 'Delivery method',
                 validity: {
                     required: false,
@@ -213,15 +213,15 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice,
-        loading: state.loading
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        purchaseBurgerHandler: dispatch((customerOrder) => createOrder(customerOrder))
+        purchaseBurgerHandler: (customerOrder) => dispatch( createOrder(customerOrder))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axiosInstance));
