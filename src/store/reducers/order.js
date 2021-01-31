@@ -1,4 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
+import  updateObject  from '../util';
+
 
 const initialState = {
     orders: [],
@@ -6,49 +8,20 @@ const initialState = {
     orderPlaced: false
 }
 
+const createOrderSuccess = (state, action) => {
+    const updatedOrders = state.orders.concat({id: action.orderId, ...action.orderDetalis})
+    return  updateObject(state, {orders: updatedOrders, loading: false, orderPlaced: true});
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case actionTypes.CREATE_ORDER_SUCCESS:
-            return {
-                ...state,
-                orders: state.orders.concat({id: action.orderId, ...action.orderDetalis}),
-                loading: false,
-                orderPlaced: true
-            }
-        case actionTypes.CREATE_ORDER_FAIL:
-            return {
-                ...state,
-                loading: false
-            }
-        case actionTypes.START_LOADING:
-            return {
-                ...state,
-                loading: true
-            }
-        case actionTypes.ORDER_PLACED:
-            return {
-                ...state,
-                orderPlaced: false
-            }
-        case actionTypes.FETCH_ORDERS_SUCCESS:
-            console.log(action.orders, 'aha');
-
-            return {
-                ...state,
-                orders: action.orders,
-                loading: false
-            }
-        case actionTypes.FETCH_ORDERS_FAIL:
-            return {
-                ...state,
-                orders: action.orders,
-                loading: false
-            }
-        case actionTypes.FETCH_ORDERS_START:
-            return {
-                ...state,
-                loading: true
-            }
+        case actionTypes.CREATE_ORDER_SUCCESS: return createOrderSuccess(state, action);
+        case actionTypes.CREATE_ORDER_FAIL: return updateObject(state, {loading: false});
+        case actionTypes.START_LOADING: return updateObject(state, {loading: true});
+        case actionTypes.ORDER_PLACED: return updateObject( state, {orderPlaced: false})
+        case actionTypes.FETCH_ORDERS_SUCCESS: return updateObject(state, {orders: action.orders, loading: false})
+        case actionTypes.FETCH_ORDERS_FAIL: return updateObject(state, {orders: action.orders, loading: false})
+        case actionTypes.FETCH_ORDERS_START: return updateObject(state, {loading: true});
         default:
             return state;
     }
