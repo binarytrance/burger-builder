@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../../UI/Input/Input';
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
 
 class Auth extends Component {
     state = {
@@ -67,7 +69,7 @@ class Auth extends Component {
         // for(let key in clonedControls) {
         //     isFormValid = key.valid && key.touched && isFormValid;
         // }
-        console.log(clonedControls, 'cloned cts');
+        // console.log(clonedControls, 'cloned cts');
 
         this.setState({controls: clonedControls, isFormValid: isFormValid});
         // setTimeout(() => {
@@ -75,6 +77,11 @@ class Auth extends Component {
         // }, 0);
 
 
+    }
+    authSubmitHandler = (event) => {
+        console.log('asdf');
+        event.preventDefault();
+        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value)
     }
     render () {
         // converting the state object to an array that can be looped through
@@ -84,15 +91,15 @@ class Auth extends Component {
         }
         return (
             <>
-                <form onSubmit={this.createOrderHandler} className='max-w-md mx-auto shadow-md p-3'>
+                <form onSubmit={this.authSubmitHandler} className='max-w-md mx-auto shadow-md p-3'>
                         {
                             formElementsArray.map(element => {
-                                console.log(element);
+                                // console.log(element);
 
                                 return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
                             })
                         }
-                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded'>
+                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded text-white'>
                             Sign in
                         </button>
                     </form>
@@ -101,4 +108,16 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    }
+}
+
+// const mapStateToProps = state => {
+//     return {
+//         authSuccess: state.auth.authSuccess,
+//     }
+// }
+
+export default connect(null, mapDispatchToProps)(Auth);
