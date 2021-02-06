@@ -84,7 +84,7 @@ class Auth extends Component {
         }
         return (
             <>
-                <form onSubmit={this.createOrderHandler}>
+                <form onSubmit={this.createOrderHandler} className='max-w-md mx-auto shadow-md p-3'>
                         {
                             formElementsArray.map(element => {
                                 console.log(element);
@@ -92,7 +92,7 @@ class Auth extends Component {
                                 return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
                             })
                         }
-                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler}>
+                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded'>
                             Sign in
                         </button>
                     </form>
