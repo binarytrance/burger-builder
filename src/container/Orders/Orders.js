@@ -10,7 +10,7 @@ import * as actions from '../../store/actions';
 const Orders = (props) => {
 
     useEffect(() => {
-        props.fetchOrders();
+        props.fetchOrders(props.token);
         // axios
         //     .get("/orders.json")
         //     .then(res => {
@@ -60,13 +60,14 @@ const Orders = (props) => {
 const mapStateToProps = (state) => {
     return  {
         loading: state.order.loading,
-        orders: state.order.orders
+        orders: state.order.orders,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchOrders: () => dispatch(actions.fetchOrders())
+        fetchOrders: (token) => dispatch(actions.fetchOrders(token))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

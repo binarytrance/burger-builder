@@ -16,12 +16,12 @@ export const startLoading = () => {
     }
 }
 // asyn action creator. this is what gets dispatched from the container on clicking of order now
-export const createOrder = (customerOrder) => {
+export const createOrder = (customerOrder, authToken) => {
     return (dispatch) => {
         // console.log(dispatch, customerOrder, 'customerorder');
         dispatch(startLoading());
         axiosInstance
-            .post("/orders.json", customerOrder)
+            .post("/orders.json?auth=" + authToken, customerOrder)
             .then(response => {
                 // this.setState({ loading: false });
                 console.log("response", response.data);
@@ -51,11 +51,11 @@ export const orderPlaced = () => {
 }
 
 // fetch order actions
-export const fetchOrders = (orders) => {
+export const fetchOrders = (authToken) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
         axiosInstance
-            .get("/orders.json")
+            .get("/orders.json?auth=" + authToken)
             .then(res => {
                 // console.log(res.data);
                 // method 1 to turn object into an array.method 2 is in Order.js

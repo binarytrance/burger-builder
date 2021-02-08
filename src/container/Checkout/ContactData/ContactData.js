@@ -142,7 +142,7 @@ class ContactData extends Component {
         //         // console.log("error", error);
         //     });
 
-        this.props.purchaseBurgerHandler(customerOrder);
+        this.props.purchaseBurgerHandler(customerOrder, this.props.token);
     };
 
     checkValidity = (value, rules) => {
@@ -216,13 +216,14 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        purchaseBurgerHandler: (customerOrder) => dispatch( createOrder(customerOrder))
+        purchaseBurgerHandler: (customerOrder, authToken) => dispatch( createOrder(customerOrder, authToken))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axiosInstance));
