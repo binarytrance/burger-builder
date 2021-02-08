@@ -14,6 +14,20 @@ export const authSuccess = (data) => {
     }
 }
 
+const logout = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+const onAuthTimeout = (timeout) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout());
+        }, timeout * 1000);
+    }
+}
+
 export const auth = (email, password, isSignUp) => {
     return dispatch => {
         // make async call
@@ -30,10 +44,11 @@ export const auth = (email, password, isSignUp) => {
         .then(response => {
             console.log(response);
             dispatch(authSuccess(response.data)); // TODO: gotta be as explicit as possible. extract the props and pass them indivisually instead of the whole data object
+            dispatch(onAuthTimeout(response.data.expiresIn))
         })
         .catch(error => {
             console.log(error)
-            dispatch(authFail(error.data));
+            dispatch(authFail(error.response.data.error));
         })
     }
 }

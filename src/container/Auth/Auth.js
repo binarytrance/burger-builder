@@ -122,6 +122,7 @@ class Auth extends Component {
                             <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded text-white'>
                                 Sign {this.state.isSignUpActive ? 'Up' : 'In'}
                             </button>
+                            <p>{this.props.error ? this.props.error.message : null}</p>
                         </form>
                         <div className='flex flex-center mt-2'>
                             <button className='mx-auto max-w-md underline' onClick={this.toggleAuthMethod}>Sign {this.state.isSignUpActive ? 'In' : 'Up'} instead</button>
