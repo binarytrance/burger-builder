@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Input from '../../UI/Input/Input';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
-
+import Spinner from '../../UI/Spinner/Spinner';
 class Auth extends Component {
     state = {
         controls: {
@@ -37,8 +37,15 @@ class Auth extends Component {
                 touched: false
             }
         },
-        isFormValid: false
+        isFormValid: false,
+        isSignUpActive:true
     }
+
+    // componentDidUpdate() {
+    //     if(this.props.token) {
+    //         this.setState({isSignUpActive: false});
+    //     }
+    // }
 
     checkValidity = (value, rules) => {
         let isValid = true;
@@ -81,7 +88,19 @@ class Auth extends Component {
     authSubmitHandler = (event) => {
         console.log('asdf');
         event.preventDefault();
-        this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value)
+        if(this.state.isSignUpActive) {
+            this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUpActive)
+        }
+        else {
+            this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUpActive)
+        }
+    }
+    toggleAuthMethod = () => {
+        this.setState(prevState => {
+            return {
+                isSignUpActive: !prevState.isSignUpActive
+            }
+        })
     }
     render () {
         // converting the state object to an array that can be looped through
@@ -91,18 +110,26 @@ class Auth extends Component {
         }
         return (
             <>
-                <form onSubmit={this.authSubmitHandler} className='max-w-md mx-auto shadow-md p-3'>
-                        {
-                            formElementsArray.map(element => {
-                                // console.log(element);
+                <h1 className='text-center'>{this.state.isSignUpActive ? 'Sign Up' : 'Sign In'}</h1>
+                {this.props.loading ? <Spinner/> : (
+                    <>
+                        <form onSubmit={this.authSubmitHandler} className='max-w-md mx-auto shadow-md p-3'>
+                            {
+                                formElementsArray.map(element => {
+                                    return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
+                                })
+                            }
+                            <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded text-white'>
+                                Sign {this.state.isSignUpActive ? 'Up' : 'In'}
+                            </button>
+                        </form>
+                        <div className='flex flex-center mt-2'>
+                            <button className='mx-auto max-w-md underline' onClick={this.toggleAuthMethod}>Sign {this.state.isSignUpActive ? 'In' : 'Up'} instead</button>
+                        </div>
+                    </>
+                )}
 
-                                return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
-                            })
-                        }
-                        <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded text-white'>
-                            Sign in
-                        </button>
-                    </form>
+
             </>
         )
     }
@@ -110,14 +137,16 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.auth(email, password))
+        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         authSuccess: state.auth.authSuccess,
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+        loading: state.auth.loading,
+        token: state.auth.token
+    }
+}
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

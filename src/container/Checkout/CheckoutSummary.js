@@ -9,11 +9,11 @@ const CheckoutSummary = ({ ingredients, cancelCheckoutHandler, placeOrderHandler
             <div className='h-1/2'>
                 <Burger ingredients={ingredients} />
             </div>
-            <div className=''>
-                <button className='' onClick={cancelCheckoutHandler}>
+            <div>
+                <button onClick={cancelCheckoutHandler}>
                     Go Back
                 </button>
-                <button className='' onClick={placeOrderHandler}>
+                <button onClick={placeOrderHandler}>
                     Proceed
                 </button>
             </div>

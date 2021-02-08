@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
@@ -15,25 +14,26 @@ export const authSuccess = (data) => {
     }
 }
 
-export const auth = (email, password) => {
+export const auth = (email, password, isSignUp) => {
     return dispatch => {
         // make async call
-        dispatch(authStart())
+        dispatch(authStart());
         const authData = {
             email,
             password,
             returnSecureToken: true
         }
         console.log(authData);
-
-        axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCbfyREQ069e7nFq8lwcNpCyPNpnpF7iMA', authData)
+        let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCbfyREQ069e7nFq8lwcNpCyPNpnpF7iMA';
+        if(!isSignUp) url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCbfyREQ069e7nFq8lwcNpCyPNpnpF7iMA';
+        axios.post(url, authData)
         .then(response => {
             console.log(response);
-            dispatch(authSuccess());
+            dispatch(authSuccess(response.data)); // TODO: gotta be as explicit as possible. extract the props and pass them indivisually instead of the whole data object
         })
         .catch(error => {
             console.log(error)
-            dispatch(authFail());
+            dispatch(authFail(error.data));
         })
     }
 }
