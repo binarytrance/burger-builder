@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "./components/Layout/Layout";
+import Layout from "./components/Layout/Layout";
 import BurgerBuilder from "./container/BurgerBuilder/BurgerBuilder";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
