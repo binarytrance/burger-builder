@@ -4,16 +4,9 @@ import { NavLink } from "react-router-dom";
 // import Checkout from "../../container/Checkout/Checkout";
 import classes from "./Layout.css";
 import { connect } from "react-redux";
-import * as actions from '../../store/actions';
 
 const Layout = props => {
-    const handleLogout = () => {
-        console.log('props', props);
 
-        // props.onLogout();
-        console.log(props, 'asdf')
-        props.history.push('/')
-    }
     return (
         <Aux>
             <nav className='flex justify-between py-3 px-4 shadow-lg'>
@@ -23,9 +16,12 @@ const Layout = props => {
                     Burger Builder
                 </NavLink>
                 {props.isLoggedIn
-                ? <button className='mr-2' onClick={handleLogout}>Logout</button>
+                ? (<>
+                    <NavLink to='/logout' className='mr-2'>Logout</NavLink>
+                    <NavLink to='/orders'>Orders</NavLink>
+                </>)
                 : <NavLink to='/auth' className='mr-2'>Sign Up</NavLink>}
-                <NavLink to='/orders'>Orders</NavLink>
+
                 </div>
 
             </nav>
@@ -43,10 +39,6 @@ const mapStateToProps = state => {
 
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogout: dispatch(() => actions.logout())
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+
+export default connect(mapStateToProps)(Layout);

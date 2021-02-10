@@ -3,6 +3,7 @@ import Input from '../../UI/Input/Input';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Spinner from '../../UI/Spinner/Spinner';
+import { Redirect } from 'react-router';
 class Auth extends Component {
     state = {
         controls: {
@@ -40,12 +41,6 @@ class Auth extends Component {
         isFormValid: false,
         isSignUpActive:true
     }
-
-    // componentDidUpdate() {
-    //     if(this.props.token) {
-    //         this.setState({isSignUpActive: false});
-    //     }
-    // }
 
     checkValidity = (value, rules) => {
         let isValid = true;
@@ -86,7 +81,7 @@ class Auth extends Component {
 
     }
     authSubmitHandler = (event) => {
-        console.log('asdf');
+        // console.log('asdf');
         event.preventDefault();
         if(this.state.isSignUpActive) {
             this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUpActive)
@@ -108,8 +103,16 @@ class Auth extends Component {
         for(let key in this.state.controls) {
             formElementsArray.push({id: key, config: this.state.controls[key]});
         }
+        let redirectOnAuth = null;
+        if(this.props.token && this.props.totalPrice > 0) {
+            redirectOnAuth = <Redirect to='/checkout' />
+        }
+        else if(this.props.token) {
+            redirectOnAuth = <Redirect to='/' />
+        }
         return (
             <>
+            {redirectOnAuth}
                 <h1 className='text-center'>{this.state.isSignUpActive ? 'Sign Up' : 'Sign In'}</h1>
                 {this.props.loading ? <Spinner/> : (
                     <>
@@ -119,7 +122,7 @@ class Auth extends Component {
                                     return <Input key={element.id} id={element.id} elementType={element.config.elementType} elementConfig={element.config.elementConfig} value={element.config.value} label={element.config.label} valid={element.config.valid} touched={element.config.touched} required={element.config.validity.required} formInputHandler={this.formInputHandler}/>
                                 })
                             }
-                            <button type='submit' disabled={!this.state.isFormValid} onClick={this.createOrderHandler} className='bg-green-500 p-2 rounded text-white'>
+                            <button type='submit' disabled={!this.state.isFormValid} className='bg-green-500 p-2 rounded text-white'>
                                 Sign {this.state.isSignUpActive ? 'Up' : 'In'}
                             </button>
                             <p>{this.props.error ? this.props.error.message : null}</p>
@@ -138,7 +141,8 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp))
+        onAuth: (email, password, isSignUp) => dispatch(actions.auth(email, password, isSignUp)),
+
     }
 }
 
@@ -146,7 +150,8 @@ const mapStateToProps = state => {
     return {
         error: state.auth.error,
         loading: state.auth.loading,
-        token: state.auth.token
+        token: state.auth.token,
+        totalPrice: state.burgerBuilder.totalPrice
     }
 }
 

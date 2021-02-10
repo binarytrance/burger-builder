@@ -35,10 +35,10 @@ const BuildControls = props => {
                 {BuildControlsLayout}
                 <button
                     className={classes.OrderButton}
-                    disabled={!props.purchasable}
+                    disabled={!props.purchasable && props.isLoggedIn}
                     onClick={props.openModalHandler}
                 >
-                    Order Now
+                    {!props.isLoggedIn ? `Sign In to Order` : `Order Now`}
                 </button>
             </div>
         </Aux>

@@ -40,7 +40,11 @@ class BurgerBuilder extends Component {
     };
 
     openModalHandler = () => {
-        this.setState({ showModal: true });
+        if(this.props.isLoggedIn){
+            this.setState({ showModal: true })
+        } else {
+            this.props.history.push('/auth');
+        }
     };
     closeModalHandler = () => {
         this.setState({ showModal: false });
@@ -75,6 +79,7 @@ class BurgerBuilder extends Component {
                         price={this.props.totalPrice}
                         purchasable={this.updatePurchaseState(this.props.ingredients)}
                         openModalHandler={this.openModalHandler}
+                        isLoggedIn={this.props.isLoggedIn}
                     />
                 </>
             );
@@ -102,7 +107,8 @@ const mapStateToProps =  state => {
         ingredients: state.burgerBuilder.ingredients,
         totalPrice: state.burgerBuilder.totalPrice,
         error: state.burgerBuilder.error,
-        orderPlaced: state.order.orderPlaced
+        orderPlaced: state.order.orderPlaced,
+        isLoggedIn: state.auth.token !== null
     }
 }
 
