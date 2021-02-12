@@ -20,7 +20,7 @@ export const fetchIngredients = (asdf) => {
 
 
     return dispatch => {
-        console.log(dispatch, 'dispatch');
+        // console.log(dispatch, 'dispatch');
         axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
         .then(response => {
             console.log(response);
