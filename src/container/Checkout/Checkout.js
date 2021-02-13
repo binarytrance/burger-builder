@@ -11,13 +11,10 @@ import { connect } from "react-redux";
 // 4.continue -> contact form
 // 5.build burger
 const Checkout = props => {
-    // console.log(props);
     // const [ingredients, setIngredients] = useState({});
     // const [totalPrice, setTotalPrice] = useState(0);
     // const urlParams = useParams();
-    // console.log(props.location.ingredients);
     const cancelCheckoutHandler = () => {
-        // console.log(props);
         props.history.goBack();
     };
     const placeOrderHandler = () => {
@@ -51,18 +48,13 @@ const Checkout = props => {
         summary = <Redirect to='/' />
     }
     // useEffect(() => {
-    //     // console.log("search", props.location.search);
 
     //     const query = new URLSearchParams(props.location.search); // returns an object with arrays ['ingredient', quantity]
     //     const ingredientsObj = {};
-    //     // console.log("query", query.entries());
-    //     // console.log('props', props.ingredients);
 
 
     //     for (let param of query.entries()) {
-    //         // console.log(param);
     //         if (param[0] === "totalPrice") {
-    //             // console.log(param[1]);
 
     //             setTotalPrice(param[1]);
     //         } else {
@@ -71,7 +63,6 @@ const Checkout = props => {
     //         }
     //     }
     //     setIngredients(ingredientsObj);
-    //     console.log(query, ingredients);
     // }, []);
     return (
         <CheckoutStyles>

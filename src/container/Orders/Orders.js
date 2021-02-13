@@ -14,26 +14,22 @@ const Orders = (props) => {
         // axios
         //     .get("/orders.json")
         //     .then(res => {
-        //         // console.log(res.data);
         //         // method 1 to turn object into an array.method 2 is in Order.js
         //         // TODO: create a util out of this
         //         const ordersArray = [];
         //         for (let key in res.data) {
         //             ordersArray.push({ ...res.data[key], key: key });
         //         }
-        //         // console.log(ordersArray);
         //         setOrders(ordersArray);
         //         setLoading(false);
         //     })
         //     .catch(err => {
-        //         console.log(err);
         //         setLoading(false);
         //     });
         // setTimeout(() => {
         //     console.table(orders);
         // }, 3000);
     }, []);
-    // console.table(orders);
 
     return (
         <div>
