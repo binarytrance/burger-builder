@@ -39,7 +39,7 @@ const Orders = (props) => {
         <div>
             <h2 className='mb-4 font-bold mx-auto text-center'>Your Orders</h2>
             <ul>
-                {!props.loading && props.orders ? (
+                {!props.loading && props.orders && Object.keys(props.orders).length === 0 && props.orders.constructor === Object ? (
                     props.orders.map(order => {
                         return (
                             <Order
