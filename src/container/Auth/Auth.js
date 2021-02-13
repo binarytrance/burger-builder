@@ -58,17 +58,10 @@ class Auth extends Component {
         // for(let key in clonedControls) {
         //     isFormValid = key.valid && key.touched && isFormValid;
         // }
-        // console.log(clonedControls, 'cloned cts');
 
         this.setState({controls: clonedControls, isFormValid: isFormValid});
-        // setTimeout(() => {
-        //     console.log(this.state.isFormValid, this.state.orderForm, deepClonedToFirstLevel, isFormValid);
-        // }, 0);
-
-
     }
     authSubmitHandler = (event) => {
-        // console.log('asdf');
         event.preventDefault();
         if(this.state.isSignUpActive) {
             this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value, this.state.isSignUpActive)
@@ -91,8 +84,6 @@ class Auth extends Component {
             formElementsArray.push({id: key, config: this.state.controls[key]});
         }
         let redirectOnAuth = null;
-        console.clear();
-        console.log(this.props.token && this.props.totalPrice > 0)
         if(this.props.token && this.props.totalPrice > 0) {
             redirectOnAuth = <Redirect to='/checkout' />
         }

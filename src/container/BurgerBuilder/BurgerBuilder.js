@@ -19,7 +19,6 @@ class BurgerBuilder extends Component {
         // here we are fetching ingredients inside the component and dispatching an action
         // axiosInstance.get('https://my-burger-builder-42007.firebaseio.com/ingredients.json')
         // .then(response => {
-        //     console.log(response.data);
         //     this.props.fetchIngredients(response.data);
         // })
         // .catch(error => {
@@ -50,12 +49,10 @@ class BurgerBuilder extends Component {
         this.setState({ showModal: false });
     };
     continuePurchaseHandler = () => {
-        console.log('queryString');
         this.props.orderPlaced();
         this.props.history.push('/checkout');
     };
     render() {
-        // console.log(this.props.ingredients)
         let orderSummary = null;
 
         const disabledInfo = {
@@ -64,7 +61,6 @@ class BurgerBuilder extends Component {
         for (let key in disabledInfo) {
             disabledInfo[key] = disabledInfo[key] <= 0 ? true : false;
         }
-        // console.log("disabled info", this.state.showModal);
         let burger = this.props.error ? <p>Ingredients cannot be shown</p> : <Spinner />;
 
         if (this.props.ingredients) {

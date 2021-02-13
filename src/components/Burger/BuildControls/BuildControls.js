@@ -15,7 +15,6 @@ import Aux from "../../../hoc/Aux";
 const BuildControls = props => {
     // const [showModal, setShowModal] = useState(false);
     const BuildControlsLayout = Object.keys(props.ingredients).map((IName, i) => {
-        // console.log(props);
         return (
             <BuildControl
                 key={IName + i}
@@ -26,8 +25,6 @@ const BuildControls = props => {
             />
         );
     });
-    // console.log(props, BuildControlsLayout, props.purchasable);
-
     return (
         <Aux>
             <div className={classes.BuildControls}>

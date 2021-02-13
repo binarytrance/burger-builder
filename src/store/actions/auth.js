@@ -27,7 +27,6 @@ export const logout = () => {
 const onAuthTimeout = (timeout) => {
     return dispatch => {
         setTimeout(() => {
-            console.log('logout inside settimout')
             dispatch(logout());
         }, timeout * 1000);
     }
@@ -42,12 +41,10 @@ export const auth = (email, password, isSignUp) => {
             password,
             returnSecureToken: true
         }
-        console.log(authData);
         let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCbfyREQ069e7nFq8lwcNpCyPNpnpF7iMA';
         if(!isSignUp) url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCbfyREQ069e7nFq8lwcNpCyPNpnpF7iMA';
         axios.post(url, authData)
         .then(response => {
-            // console.log(response);
             const expiryDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expiryDate', expiryDate); // setting the expiry date
             localStorage.setItem('userId', response.data.localId);
@@ -73,25 +70,18 @@ export const authFail = (error) => {
 export const checkForAuth = () => {
     const token = localStorage.getItem('authToken');
     const expiryDate = new Date(localStorage.getItem('expiryDate'));
-    console.log(expiryDate, token, new Date(), 'checkforAuth');
-
     const userId = localStorage.getItem('userId');
     return dispatch => {
         // debugger;
         if(!token) {
-            console.log('no token');
             return;
         }
         else if(new Date() <= expiryDate) {
             dispatch(authStart())
             dispatch(authSuccess(token, userId));
-            console.log(expiryDate.getTime() - new Date().getTime(), 'diff');
-
             dispatch(onAuthTimeout((expiryDate.getTime() - new Date().getTime())/1000))
         }
         else {
-            console.log('timedout logged out');
-
             dispatch(logout());
         }
     }

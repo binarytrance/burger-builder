@@ -1,7 +1,6 @@
 import React from "react";
 
 const Order = ({ ingredients, totalPrice }) => {
-    console.log(ingredients);
     // method 2 to create array out of an object
     const ingredientsList = Object.keys(ingredients).map((ingredient, index) => {
         return (

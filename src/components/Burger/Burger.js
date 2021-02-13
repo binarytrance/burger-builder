@@ -4,9 +4,6 @@ import BurgerIngredient from "./BurgerIngredients/BurgerIngredients";
 import Aux from "../../hoc/Aux";
 
 const Burger = props => {
-    // console.clear();
-    // console.log(props.ingredients);
-
     let transformedIngredients = Object.keys(props.ingredients)
         .map(IgKey => {
             return [...Array(props.ingredients[IgKey])].map((_, index) => {
@@ -19,7 +16,6 @@ const Burger = props => {
     if (transformedIngredients.length === 0) {
         transformedIngredients = <p>Please add burger ingredients.</p>;
     }
-    // console.log(transformedIngredients);
     return (
         <Aux>
             <div className={classes.Burger}>

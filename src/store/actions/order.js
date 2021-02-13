@@ -58,20 +58,17 @@ export const fetchOrders = (authToken, userId) => {
         axiosInstance
             .get("/orders.json" + queryParam)
             .then(res => {
-                // console.log(res.data);
                 // method 1 to turn object into an array.method 2 is in Order.js
                 // TODO: create a util out of this
                 const ordersArray = [];
                 for (let key in res.data) {
                     ordersArray.push({ ...res.data[key], key: key });
                 }
-                // console.log(ordersArray);
                 // setOrders(ordersArray);
                 dispatch(fetchOrdersSuccess(ordersArray))
                 // setLoading(false);
             })
             .catch(err => {
-                console.log(err);
                 dispatch(fetchOrdersFail());
             });
     }
