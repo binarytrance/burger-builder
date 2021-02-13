@@ -104,6 +104,8 @@ class Auth extends Component {
             formElementsArray.push({id: key, config: this.state.controls[key]});
         }
         let redirectOnAuth = null;
+        console.clear();
+        console.log(this.props.token && this.props.totalPrice > 0)
         if(this.props.token && this.props.totalPrice > 0) {
             redirectOnAuth = <Redirect to='/checkout' />
         }

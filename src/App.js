@@ -27,6 +27,7 @@ function App(props) {
                     <Route path='/orders' component={Orders} />
                     <Route path='/checkout' component={Checkout} />
                     <Route path='/logout' component={Logout} />
+                    <Route path='/auth' component={Auth}/>
                     <Route exact path='/' component={BurgerBuilder} />
                     <Redirect to='/'/>
             </Switch>

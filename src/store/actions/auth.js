@@ -48,12 +48,13 @@ export const auth = (email, password, isSignUp) => {
         axios.post(url, authData)
         .then(response => {
             // console.log(response);
-            dispatch(authSuccess(response.data.idToken, response.data.localId)); // TODO: gotta be as explicit as possible. extract the props and pass them indivisually instead of the whole data object
-            dispatch(onAuthTimeout(response.data.expiresIn))
-            localStorage.setItem('authToken', response.data.idToken);
             const expiryDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expiryDate', expiryDate); // setting the expiry date
             localStorage.setItem('userId', response.data.localId);
+            dispatch(authSuccess(response.data.idToken, response.data.localId)); // TODO: gotta be as explicit as possible. extract the props and pass them indivisually instead of the whole data object
+            dispatch(onAuthTimeout(response.data.expiresIn))
+            localStorage.setItem('authToken', response.data.idToken);
+
         })
         .catch(error => {
             console.log(error)
@@ -72,7 +73,7 @@ export const authFail = (error) => {
 export const checkForAuth = () => {
     const token = localStorage.getItem('authToken');
     const expiryDate = new Date(localStorage.getItem('expiryDate'));
-    console.log(expiryDate, new Date(), 'checkforAuth');
+    console.log(expiryDate, token, new Date(), 'checkforAuth');
 
     const userId = localStorage.getItem('userId');
     return dispatch => {
