@@ -4,6 +4,7 @@ import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Spinner from '../../UI/Spinner/Spinner';
 import { Redirect } from 'react-router';
+import { checkValidity } from '../../utils/checkValidity';
 class Auth extends Component {
     state = {
         controls: {
@@ -42,20 +43,6 @@ class Auth extends Component {
         isSignUpActive:true
     }
 
-    checkValidity = (value, rules) => {
-        let isValid = true;
-
-        if(rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-        if(rules.minLength) {
-            isValid = value.trim().length >= rules.minLength && isValid;
-        }
-        if(rules.maxLength) {
-            isValid = value.trim().length <= rules.maxLength && isValid;
-        }
-        return isValid;
-    }
 
     formInputHandler = (event, controlName) => {
         const clonedControls = {
@@ -64,7 +51,7 @@ class Auth extends Component {
                 ...this.state.controls[controlName],
                 value: event.target.value,
                 touched: true,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validity)
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validity)
             }
         }
         let isFormValid = true;
