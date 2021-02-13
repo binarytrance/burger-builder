@@ -8,8 +8,6 @@ export const authStart = () => {
 }
 
 export const authSuccess = (authToken, userId) => {
-    console.log('success');
-
     return {
         type: actionTypes.AUTH_SUCCESS,
         authToken,
@@ -18,8 +16,6 @@ export const authSuccess = (authToken, userId) => {
 }
 
 export const logout = () => {
-    console.log('logout being called');
-
     localStorage.setItem('authToken', null);
     localStorage.setItem('expiryDate', null);
     localStorage.setItem('userId', null);
@@ -29,8 +25,6 @@ export const logout = () => {
 }
 
 const onAuthTimeout = (timeout) => {
-    console.log('on auth Timeout', timeout);
-
     return dispatch => {
         setTimeout(() => {
             console.log('logout inside settimout')
@@ -86,7 +80,6 @@ export const checkForAuth = () => {
         if(!token) {
             console.log('no token');
             return;
-
         }
         else if(new Date() <= expiryDate) {
             dispatch(authStart())

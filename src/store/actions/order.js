@@ -24,7 +24,7 @@ export const createOrder = (customerOrder, authToken) => {
             .post("/orders.json?auth=" + authToken, customerOrder)
             .then(response => {
                 // this.setState({ loading: false });
-                console.log("response", response.data);
+                // console.log("response", response.data);
                 // this.props.history.push("/");
                 dispatch(createOrderSuccess(response.data.name, customerOrder));
                 dispatch(orderPlaced())
@@ -51,11 +51,12 @@ export const orderPlaced = () => {
 }
 
 // fetch order actions
-export const fetchOrders = (authToken) => {
+export const fetchOrders = (authToken, userId) => {
     return dispatch => {
         dispatch(fetchOrdersStart());
+        const queryParam = `?auth=${authToken}&orderBy="userId"&equalTo="${userId}"`
         axiosInstance
-            .get("/orders.json?auth=" + authToken)
+            .get("/orders.json" + queryParam)
             .then(res => {
                 // console.log(res.data);
                 // method 1 to turn object into an array.method 2 is in Order.js
