@@ -2,8 +2,6 @@ import React from "react";
 
 const Input = props => {
     let inputElement = null;
-    // console.log('touched', props.touched);
-
     switch (props.elementType) {
         case "input":
             inputElement = <input className={!props.valid && props.required && props.touched ?  'border-solid border-2 border-red-300' : 'shadow-md px-2 py-1'} type={props.elementType} {...props.elementConfig} value={props.value} onChange={(event) => props.formInputHandler(event, props.id)}/>;

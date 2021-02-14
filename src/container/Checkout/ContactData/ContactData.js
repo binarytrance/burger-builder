@@ -118,7 +118,6 @@ class ContactData extends Component {
     };
     createOrderHandler = e => {
         e.preventDefault();
-        // console.log("submit form", this.props.ingredients, this.props.totalPrice);
         const orderDetails = {};
         for(let formElementIdentier in this.state.orderForm) {
             orderDetails[formElementIdentier] = this.state.orderForm[formElementIdentier].value
@@ -130,18 +129,15 @@ class ContactData extends Component {
             orderDetails: orderDetails,
             userId: this.props.userId
         };
-        // console.log("axios", axiosInstance);
 
         // axiosInstance
         //     .post("/orders.json", customerOrder)
         //     .then(response => {
         //         this.setState({ loading: false });
-        //         // console.log("response", response);
         //         this.props.history.push("/");
         //     })
         //     .catch(error => {
         //         this.setState({ loading: false });
-        //         // console.log("error", error);
         //     });
 
         this.props.purchaseBurgerHandler(customerOrder, this.props.token);
@@ -150,27 +146,19 @@ class ContactData extends Component {
 
 
     formInputHandler = (event, inputIdentifier) => {
-        // console.log(event.target.value);
         // this doesn't deep clone the object, just the first level
         const clonedOrderForm = {...this.state.orderForm};
         // clones object one level deeper
         const deepClonedToFirstLevel = {...clonedOrderForm[inputIdentifier]};
-        // console.log(clonedOrderForm);
         deepClonedToFirstLevel.value = event.target.value;
         deepClonedToFirstLevel.valid = checkValidity(event.target.value, deepClonedToFirstLevel.validity);
         deepClonedToFirstLevel.touched = true;
         clonedOrderForm[inputIdentifier] = deepClonedToFirstLevel;
         let isFormValid = true;
         for(let key in clonedOrderForm) {
-            // console.log(deepClonedToFirstLevel[key], isFormValid, 'voila', deepClonedToFirstLevel, key)
             isFormValid = clonedOrderForm[key].valid && isFormValid;
         }
         this.setState({orderForm: clonedOrderForm, isFormValid: isFormValid});
-        // setTimeout(() => {
-        //     console.log(this.state.isFormValid, this.state.orderForm, deepClonedToFirstLevel, isFormValid);
-        // }, 0);
-
-
     }
 
     render() {

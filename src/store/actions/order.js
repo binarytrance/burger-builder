@@ -18,20 +18,17 @@ export const startLoading = () => {
 // asyn action creator. this is what gets dispatched from the container on clicking of order now
 export const createOrder = (customerOrder, authToken) => {
     return (dispatch) => {
-        // console.log(dispatch, customerOrder, 'customerorder');
         dispatch(startLoading());
         axiosInstance
             .post("/orders.json?auth=" + authToken, customerOrder)
             .then(response => {
                 // this.setState({ loading: false });
-                // console.log("response", response.data);
                 // this.props.history.push("/");
                 dispatch(createOrderSuccess(response.data.name, customerOrder));
                 dispatch(orderPlaced())
             })
             .catch(error => {
                 // this.setState({ loading: false });
-                // console.log("error", error);
                 dispatch(createOrderFail(error));
             });
     }
